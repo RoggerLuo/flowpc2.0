@@ -1,4 +1,4 @@
-import test from '../../test.js'
+import test from '../../utils/test.js'
 import _test from 'tape'
 import model from './model'
 import dva from '../index.js'

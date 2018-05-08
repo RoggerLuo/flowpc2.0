@@ -8,7 +8,7 @@ export default {
         change(state, { key, value }) {
             let obj = {}
             obj[key] = value
-            return Object.assign({}, state, obj)
+            return {...state,...obj}
         },
     },
 }
