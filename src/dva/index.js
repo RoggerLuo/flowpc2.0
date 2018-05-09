@@ -3,6 +3,7 @@ import fetch from './fetch'
 import handleModel from './handleModel'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import { put, takeEvery, all } from 'redux-saga/effects'
 import invariant from 'invariant'
 
 let startedFlag = false
@@ -16,13 +17,6 @@ const app = {
 }
 start(app)
 export default app
-// function(){
-//     if(startedFlag){
-//         return app        
-//     }
-//     start(app)
-//     return app
-// }
 
 function start(app) {
     startedFlag = true
@@ -38,7 +32,8 @@ function start(app) {
         app._store.replaceReducer(combineReducers({ ...reducers }))
         m.event && m.event.onReady && m.event.onReady(app._store.dispatch)
     }
-    app.saga = function(effect) {
+    app.saga = function(cb) {
+        const effects = cb({ put, takeEvery, all })
         sagaMiddleware.run(effect)
     }
 }
