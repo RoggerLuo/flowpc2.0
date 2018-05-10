@@ -23,15 +23,12 @@ export const pos = (id, content) => dva.fetch(`note/${id}`, { method: 'POST', bo
 
 
 
-(cb) => {
-    const saga = cb()
-    return function*() {
-        yield takeEvery('INCREMENT_ASYNC', saga)
-    }
+dva.saga('notes/get', function*(action,{ put, call }) {
+
+})
+
+return function*() {
+yield delay(1000)
+yield put({ type: 'INCREMENT' })
 }
-dva.saga(
-    return function*(){
-        yield delay(1000)
-        yield put({ type: 'INCREMENT' })
-    }
 )

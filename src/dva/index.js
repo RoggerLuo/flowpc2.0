@@ -3,8 +3,8 @@ import fetch from './fetch'
 import handleModel from './handleModel'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import { put, takeEvery, all } from 'redux-saga/effects'
 import invariant from 'invariant'
+import createSaga from './createSaga'
 
 let startedFlag = false
 const app = {
@@ -32,8 +32,8 @@ function start(app) {
         app._store.replaceReducer(combineReducers({ ...reducers }))
         m.event && m.event.onReady && m.event.onReady(app._store.dispatch)
     }
-    app.saga = function(cb) {
-        const effects = cb({ put, takeEvery, all })
-        sagaMiddleware.run(effect)
+
+    app.saga = function(key,cb) {        
+        sagaMiddleware.run(createSaga(key,cb))
     }
 }
