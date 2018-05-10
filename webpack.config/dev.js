@@ -5,12 +5,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const projectRoot = path.resolve(__dirname, '../')
 
-function dev(basic){
+function dev(basic) {
     basic.mode = 'development'
     basic.output.filename = 'bundle.js'
-    basic.module.rules.push({   
-        test: /\.css$/, 
-        use: [ 'style-loader', 'css-loader', 'postcss-loader' ]
+    basic.module.rules.push({
+        test: /\.css$/,
+        use: [
+            'style-loader',
+            {
+                loader: 'css-loader',
+                options: { modules: true }
+            },
+            'postcss-loader'
+        ]
     })
     basic.plugins = [
         new HtmlWebpackPlugin({
@@ -33,7 +40,7 @@ function dev(basic){
             changeOrigin: true
         }
     }*/
-    return basic   
+    return basic
 }
 
 module.exports = dev(basic)

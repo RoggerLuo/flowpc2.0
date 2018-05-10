@@ -11,11 +11,11 @@ module.exports = {
         filename: 'bundle.[hash].js'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.scss', '.html'],
+        extensions: ['.js', '.jsx', '.css', '.html'],
         alias: {
             'component': `${projectRoot}/src/component`,
             'util': `${projectRoot}/src/util`,
-            'dva': `${projectRoot}/src/dva`
+            'dva': `${projectRoot}/dva`
         }
     },
     module: {

@@ -1,8 +1,9 @@
 import "babel-polyfill"
-import fetch from './fetch'
-import handleModel from './handleModel'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import { connect } from 'react-redux'
+import fetch from './fetch'
+import handleModel from './handleModel'
 import invariant from 'invariant'
 import createSaga from './createSaga'
 
@@ -13,6 +14,7 @@ const app = {
     model: null,
     saga: null,
     fetch,
+    connect,
     start
 }
 start(app)
@@ -32,8 +34,7 @@ function start(app) {
         app._store.replaceReducer(combineReducers({ ...reducers }))
         m.event && m.event.onReady && m.event.onReady(app._store.dispatch)
     }
-
-    app.saga = function(key,cb) {        
-        sagaMiddleware.run(createSaga(key,cb))
+    app.saga = function(key, cb) {
+        sagaMiddleware.run(createSaga(key, cb))
     }
 }
