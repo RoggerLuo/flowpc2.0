@@ -1,3 +1,36 @@
-.test{
-    color:red;
+
+.scrollbar::-webkit-scrollbar {
+  width: 2px;
+  background: white;
+}
+.scrollbar::-moz-scrollbar {
+  width: 2px;
+  background: white;
+}
+.scrollbar::-ms-scrollbar {
+  width: 2px;
+  background: white;
+}
+.scrollbar::-o-scrollbar {
+  width: 2px;
+  background: white;
+}
+.scrollbar::scrollbar {
+  width: 2px;
+  background: white;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #00B1FB;
+}
+.scrollbar::-moz-scrollbar-thumb {
+  background: #00B1FB;
+}
+.scrollbar::-ms-scrollbar-thumb {
+  background: #00B1FB;
+}
+.scrollbar::-o-scrollbar-thumb {
+  background: #00B1FB;
+}
+.scrollbar::scrollbar-thumb {
+  background: #00B1FB;
 }

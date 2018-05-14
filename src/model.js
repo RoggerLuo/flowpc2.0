@@ -1,5 +1,4 @@
-import dva from 'dva'
-dva.model({
+export default {
     namespace: 'app',
     state: {
         showSearchPanel: false,
@@ -14,9 +13,7 @@ dva.model({
         },
     },
     event: {
-        onReady({ dispatch, history }) {
-            history.listen(({ pathname, query }) => {})
+        onReady(dispatch) {
         }
     }
-})
-
+}

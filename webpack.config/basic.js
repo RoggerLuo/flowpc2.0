@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.css', '.html'],
         alias: {
-            'component': `${projectRoot}/src/component`,
+            'components': `${projectRoot}/src/components`,
             'util': `${projectRoot}/src/util`,
             'dva': `${projectRoot}/dva`
         }

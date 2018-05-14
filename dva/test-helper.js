@@ -1,6 +1,6 @@
 import test from 'tape'
-
-export default (title,body) => {
+import dva from './index.js'
+const _test =  (title,body) => {
     test(title,(t)=>{
         body(subTopic)
         t.end()
@@ -9,3 +9,5 @@ export default (title,body) => {
         }
     })
 }
+dva.test = _test
+global.dva = dva

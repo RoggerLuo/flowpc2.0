@@ -13,8 +13,8 @@ export default function({ reducers, state, namespace }) {
 
 function handleAction(actionType, reducer = identify) {
     return (state, action) => {
-        const { type } = action;
-        invariant(type, 'dispatch: action should be a plain Object with type');
+        const { type } = action
+        invariant(type, 'dispatch: action should be a plain Object with type')
         if (actionType === type) {
             return reducer(state, action)
         }
@@ -33,5 +33,5 @@ function reduceReducers(...reducers) {
 }
 
 function identify(value) {
-    return value;
+    return value
 }

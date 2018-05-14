@@ -1,12 +1,15 @@
+import dva from './index.js'
+import invariant from 'invariant'
+
 export default function(url, { ...options }) {
+    invariant(dva.api,`server api address is not set yet`)
+    url = `${dva.api}/${url}`
     options.credentials = 'include'
-    if(!options.method) options.method = "GET"
+    if (!options.method) options.method = "GET"
     options.method = options.method.toUpperCase()
     if (options.method === 'POST' || options.method === 'PUT') {
         options.body = transformBody(options.body)
     }
-
-
     if (options.query) {
         url = url + transformQuery(options.query)
     }
@@ -14,10 +17,20 @@ export default function(url, { ...options }) {
         .then(checkStatus)
         .then(parseJSON)
         .catch(err => {
-            message.error(`在请求${url}的时候`)
-            message.error(`网络错误${err}`)
+            console.log(err)
         })
 }
+
+function parseJSON(response) {
+  return response.json();
+}
+
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  }
+}
+
 function transformQuery(query) {
     let queryStr = '?'
     for (let k in query) {
@@ -28,8 +41,9 @@ function transformQuery(query) {
             queryStr += '&'
         }
     }
-    return queryStr.slice(0,-1)
+    return queryStr.slice(0, -1)
 }
+
 function transformBody(body) {
     const postdata = new FormData()
     for (let k in body) {
