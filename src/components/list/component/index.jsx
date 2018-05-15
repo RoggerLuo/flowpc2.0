@@ -1,16 +1,10 @@
 import React from 'react'
 import dva from 'dva'
-import { NoteContent, NoteWrapper } from './Note'
-
+import Note from './Note'
 function Notes({ notes, index }){
     return (
         <div style={{width:'100%'}}>
-            { notes.map((note,ind) => (
-                <NoteWrapper key={ind}>
-                    <NoteContent {...note}/>
-                </NoteWrapper>
-                )
-            )}
+            { notes.map((note,index) => <Note {index,...note} key={index}/>) }
         </div>
     )
 }

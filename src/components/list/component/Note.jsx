@@ -9,7 +9,6 @@ export function NoteContent({ itemId, content }){
         </div>
     )
 }
-//          onClick={click}
 
 export function NoteWrapper({ selected, children }){
     let style = { cursor:'pointer', borderRight: '0.5px solid #ccc' }
@@ -27,4 +26,3 @@ export function NoteWrapper({ selected, children }){
     )
 }
 
-// export default Note

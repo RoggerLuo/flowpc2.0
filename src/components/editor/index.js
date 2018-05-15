@@ -33,10 +33,10 @@ function mapStateToProps(state) {
 
 export default dva.connect(mapStateToProps)(MyEditor)
 
-function getText(editorState) {
+export function getText() {
+    const editorState = dva._store.getState().editor.editorState
     const contentState = editorState.getCurrentContent()
-    const content = contentState.getPlainText()
-    dispatch({type:'localData/modify_note_content',content})        
+    return contentState.getPlainText()
 }
 
 

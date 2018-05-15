@@ -7,9 +7,6 @@ export default {
 
         yield put({ type: 'list/fetch', notes:[{test:'asd'}] })
     },
-    * deleteNote({ id }, { fetch, call, put }) {
-        yield call(fetch, `note/${id}`, { method: 'delete' })
-    },
     * postNote({ id, content }, { fetch, call, put }) {
         yield call(fetch, `note/${id}`, { method: 'post', body: { content } })
     }
