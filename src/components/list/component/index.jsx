@@ -1,17 +1,20 @@
 import React from 'react'
 import dva from 'dva'
-import Note from './Note'
-function Notes({ notes, index }){
+import Note from './NoteContainer'
+
+function Notes({ dispatch, currentIndex, onSelect, notes }){
+    const params = { dispatch, currentIndex, onSelect }
     return (
         <div style={{width:'100%'}}>
-            { notes.map((note,index) => <Note {index,...note} key={index}/>) }
+            { notes.map((note,index) => <Note {...params} index={index} note={note} key={index}/>) }
         </div>
     )
 }
+
 function mapStateToProps(state) {
     return { 
         notes: state.list.notes,
-        index: state.list.index
+        currentIndex: state.list.index
     }
 }
 

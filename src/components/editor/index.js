@@ -1,42 +1,15 @@
 import React from 'react'
 import dva from 'dva'
-import { Editor } from 'draft-js'
-import { startFromScratch } from './draft'
 import model from './model'
-
+import Editor from './Editor'
 dva.model(model)
-
-class MyEditor extends React.Component {
-    constructor(props) {
-        super(props)
-        this.setDomEditorRef = ref => this.domEditor = ref
-    }
-    onChange(editorState) {
-        this.props.dispatch({ type: 'editor/onChange', editorState })
-    }
-    focus(){
-        this.domEditor.focus()
-    }
-    render(){
-        return (
-            <div style={{height:'100%',cursor:'text'}} onClick={this.focus.bind(this)}>
-                <Editor editorState={this.props.editorState} onChange={this.onChange.bind(this)} ref={this.setDomEditorRef} />
-            </div>
-        )
-    }
-}
-
-function mapStateToProps(state) {
-    const editorState = state.editor.editorState
-    return { editorState }
-}
-
-export default dva.connect(mapStateToProps)(MyEditor)
-
-export function getText() {
+/* 对外界一无所知,只能用本组件的model,dispatch自己model的方法 */
+export default Editor
+/*export function getText() {
     const editorState = dva._store.getState().editor.editorState
     const contentState = editorState.getCurrentContent()
     return contentState.getPlainText()
+}*/
+export function replace(note) {
+    dva._store.dispatch({ type:'editor/read', note })
 }
-
-

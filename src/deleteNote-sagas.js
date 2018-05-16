@@ -6,8 +6,5 @@ export default {
     * deleteNote({ id }, { call, put }) {
         yield call(fetch, `note/${id}`, { method: 'delete' })
     },
-    * postNote({ id, content }, { call, put }) {
-        yield call(fetch, `note/${id}`, { method: 'post', body: { content } })
-    }
 }
 // listSub

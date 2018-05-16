@@ -1,8 +1,8 @@
 import { Editor, EditorState, ContentState } from 'draft-js'
 import decorator from './decorator'
 
-export function startFromText(){
-    const cs = ContentState.createFromText('#text\n##asdfasd\n###asdfasdf')
+export function startFromText(text){
+    const cs = ContentState.createFromText(text)
     return EditorState.createWithContent(cs,decorator)
 }
 

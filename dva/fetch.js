@@ -18,6 +18,7 @@ export default function(url, { ...options }) {
         .then(parseJSON)
         .catch(err => {
             console.log(err)
+            alert(err)
         })
 }
 

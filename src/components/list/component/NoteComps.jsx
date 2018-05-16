@@ -1,20 +1,20 @@
 import React from 'react'
 
-export function NoteContent({ itemId, content }){
+export function NoteContent({ itemId, content, select }){
     return (
         <div 
-          style={{fontSize:'17px',lineHeight:'1.5',minHeight:'50px',padding:'15px 10px 15px 10px'}} 
+          onClick={select}
+          style={{fontSize:'16px',lineHeight:'1.5',minHeight:'50px',padding:'15px 10px 15px 10px'}} 
         >
             <div>{content}</div>
         </div>
     )
 }
 
-export function NoteWrapper({ selected, children }){
+export function NoteWrapper({ isSelected, children }){
     let style = { cursor:'pointer', borderRight: '0.5px solid #ccc' }
     let _class = ""
-    
-    if(selected){
+    if(isSelected){
         style = { borderRight: '0.5px solid #ccc', backgroundColor: '#ececec' } 
         _class = "selectedNote"
     }

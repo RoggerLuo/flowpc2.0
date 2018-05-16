@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --progress --color",
     "build": "node ./webpack.config/build.js",
     "build-test": "node ./webpack.config/build-test.js",
-    "test": "node dva/iter.js | grep spec.js$ | xargs -n1 -I {} tape -r babel-register -r ./dva/test-helper.js {}"
+    "test": "node dva/testfile-iter.js | grep spec.js$ | xargs -n1 -I {} tape -r babel-register -r ./dva/test-helper.js {}"
   },
   "author": "",
   "license": "ISC",
