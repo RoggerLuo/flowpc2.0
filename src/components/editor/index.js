@@ -2,6 +2,7 @@ import React from 'react'
 import dva from 'dva'
 import model from './model'
 import Editor from './Editor'
+
 dva.model(model)
 /* 对外界一无所知,只能用本组件的model,dispatch自己model的方法 */
 export default Editor

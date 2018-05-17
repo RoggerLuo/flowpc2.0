@@ -9,8 +9,12 @@ export default (sagaMiddleware,namespace) => (key, cb) => {
 }
 
 function createSaga(key,cb,namespace) {
+    function prefixed_put(action) {
+        action.type = `${namespace}/${action.type}`
+        return put(action)
+    }
     function* saga(action) {
-        yield cb(action, { put, call, fetch })
+        yield cb(action,{ put: prefixed_put, call, fetch })
     }
     return function*() {
         yield takeEvery(`${namespace}/${key}`,saga)

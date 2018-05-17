@@ -1,5 +1,10 @@
 import { startFromScratch, startFromText } from './draft'
 import invariant from 'invariant'
+// import moveSelectionToEnd from './moveSelectionToEnd'
+/*
+    1新建之后留了一个字母
+    2新建之后无法保存
+*/
 export default {
     namespace: 'editor',
     state: {
@@ -17,20 +22,35 @@ export default {
             return { ...state, editorState, unsaved: true }
         },
         read(state, { note }) {
-            return { ...state, editorState: startFromText(note.content || ' '), note }
+            return { ...state, editorState: startFromText(note.content || ''), note }
         },
-        empty(state) {
-            return { ...state, editorState: startFromScratch() }
+        startFromEmpty(state,{ note }) {
+            return { ...state, editorState: startFromScratch(), note }
         }
     },
     effects: {
-        * saveNote({ itemId, content }, { fetch, call, put }) {
+        * new({ state }, { fetch, call, put }) {
+            yield put({ type: 'save', ...state })
+            const itemId = Date.parse(new Date())
+            yield put({ type: 'startFromEmpty', note: { itemId } })
+        },
+        * save(state, { fetch, call, put }) {
+            if (state.unsaved) {
+                const contentState = state.editorState.getCurrentContent()
+                const text = contentState.getPlainText()
+                // 总是忘记yield ...
+                yield put({ type: 'postServer', content: text, itemId: state.note.itemId })
+            }
+        },
+        * postServer({ itemId, content }, { fetch, call, put }) {
+            // 不直接调用，由save调用
+            yield put({ type: 'change', key: 'unsaved', value: false })
             const res = yield call(fetch, `note/${itemId}`, { method: 'post', body: { content } })
             if (res !== 'ok') {
                 alert(`request error:${res}`)
+                yield put({ type: 'change', key: 'unsaved', value: true })
                 return
             }
-            put({ type: 'editor/change', key: 'unsaved', value: false })
         }
     },
     event: {

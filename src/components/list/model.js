@@ -28,7 +28,7 @@ export default {
                 const note = notes[0]
                 invariant(note.hasOwnProperty('itemId') && note.hasOwnProperty('content') && note.hasOwnProperty('wordList'), 'notes格式不对')
             }
-            yield put({ type: 'list/fetch', notes })
+            yield put({ type: 'fetch', notes })
             cb(notes)
         },
         * deleteNote({ id }, { fetch, call, put }) {
