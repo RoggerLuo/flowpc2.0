@@ -8,8 +8,6 @@ import invariant from 'invariant'
 export default {
     namespace: 'editor',
     state: {
-        editorState: startFromScratch(),
-        note: {},
         unsaved: false
     },
     reducers: {
@@ -18,28 +16,17 @@ export default {
             obj[key] = value
             return { ...state, ...obj }
         },
-        onChange(state, { editorState }) {
-            return { ...state, editorState, unsaved: true }
-        },
-        read(state, { note }) {
-            return { ...state, editorState: startFromText(note.content || ''), note }
-        },
-        startFromEmpty(state,{ note }) {
-            return { ...state, editorState: startFromScratch(), note }
+        onChange(state,action) {
+            return { ...state, unsaved: true }
         }
     },
     effects: {
-        * new({ state }, { fetch, call, put }) {
-            yield put({ type: 'save', ...state })
-            const itemId = Date.parse(new Date())
-            yield put({ type: 'startFromEmpty', note: { itemId } })
-        },
-        * save(state, { fetch, call, put }) {
-            if (state.unsaved) {
-                const contentState = state.editorState.getCurrentContent()
+        * save({ unsaved, editorState, itemId }, { fetch, call, put }) {
+            invariant(!!itemId,'itemId没有传入')
+            if (unsaved) {
+                const contentState = editorState.getCurrentContent()
                 const text = contentState.getPlainText()
-                // 总是忘记yield ...
-                yield put({ type: 'postServer', content: text, itemId: state.note.itemId })
+                yield put({ type: 'postServer', content: text, itemId })
             }
         },
         * postServer({ itemId, content }, { fetch, call, put }) {
@@ -59,3 +46,16 @@ export default {
         }
     }
 }
+
+// * new({ state }, { fetch, call, put }) {
+//     yield put({ type: 'save', ...state })
+//     const itemId = Date.parse(new Date())
+//     yield put({ type: 'startFromEmpty', note: { itemId } })
+// },
+
+// read(state, { note }) {
+//     return { ...state, editorState: startFromText(note.content || ''), note }
+// },
+// startFromEmpty(state,{ note }) {
+//     return { ...state, editorState: startFromScratch(), note }
+// }

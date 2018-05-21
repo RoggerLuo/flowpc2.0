@@ -7,11 +7,25 @@ export default {
         index: 0,
     },
     reducers: {
-        fetch(state, { notes }) {
+        fetch(state,{ notes }) {
             return { ...state, notes }
         },
-        select(state, { index }) {
+        select(state,{ index }) {
             return { ...state, index }
+        },
+        add(state,{ note }) {
+            const notes = [note,...state.notes]
+            return { ...state, notes, index: 0 }
+        },
+        modify(state,{ note }) {
+            const notes = [...state.notes]
+            notes.some(_note=>{
+                if(_note.itemId == note.itemId) {
+                    _note.content = note.content
+                    return true
+                }
+            })
+            return { ...state, notes }
         }
     },
     effects: {

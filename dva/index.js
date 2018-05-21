@@ -4,16 +4,17 @@ import createSagaMiddleware from 'redux-saga'
 import { connect } from 'react-redux'
 import invariant from 'invariant'
 import injectModel from './injectModel'
+import keyBind from './keyboard'
 import config from '../dva.config'
 const app = {
     _models: [],
     _store: null,
     model: null,
+    keyBind,
     connect
 }
 start(app)
 export default app
-
 function start(app) {
     const reducers = {}
     const sagaMiddleware = createSagaMiddleware()

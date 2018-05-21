@@ -11,6 +11,6 @@ export default Editor
     const contentState = editorState.getCurrentContent()
     return contentState.getPlainText()
 }*/
-export function replace(note) {
-    dva._store.dispatch({ type:'editor/read', note })
-}
+// export function replace(note) {
+//     dva._store.dispatch({ type:'editor/read', note })
+// }
