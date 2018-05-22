@@ -1,5 +1,17 @@
 import { startFromScratch } from './draft'
+
 let newNoteAdded = false
+
+export function deleteNote(){
+    let content = this.state.editorState.getCurrentContent().getPlainText()
+    if(content.length>20) {
+        content = content.slice(0,20) + '...'
+    }
+    if(!confirm(`确定要删除当前文章吗?\n"${content}"`)) return 
+    const { itemId } = this.state
+    const callback = () => this.props.onDelete(itemId,(newNote)=>this.replacer(newNote))
+    this.props.dispatch({ type: 'editor/delete', itemId, callback })
+}
 
 export function saveNote(){
     const { itemId, editorState } = this.state

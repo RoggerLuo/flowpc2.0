@@ -2,7 +2,7 @@ import React from 'react'
 import { Editor } from 'draft-js'
 import { myKeyBindingFn, handleKeyCommand } from './keyCommand'
 import moveSelectionToEnd from './moveSelectionToEnd'
-import { saveNote, newNote } from './keyActions'
+import { saveNote, newNote, deleteNote } from './keyActions'
 import { startFromScratch, startFromText } from './draft'
 import dva from 'dva'
 import img from './bg.png'
@@ -14,24 +14,26 @@ class MyEditor extends React.Component {
         // bind
         this.handleKeyCommand = handleKeyCommand.bind(this)
         this.saveNote = saveNote.bind(this)
+        this.deleteNote = deleteNote.bind(this)
         this.newNote = newNote.bind(this)
         this.buildExternalInterface.bind(this)
         // 
         dva.keyBind(({keyMap,meta,ctrl},catcher)=>{
             catcher(keyMap['n'],{meta,ctrl},(e)=>this.newNote())
             catcher(keyMap['s'],{meta},(e)=>this.saveNote())
+            catcher(keyMap['backSpace'],{meta,ctrl},(e)=>this.deleteNote())
         })
         this.setDomEditorRef = ref => this.domEditor = ref
         this.oldText = '' //为了能够区分是 光标change 还是 内容change
         this.buildExternalInterface()
     }
     buildExternalInterface(){
-        const replacer = (note) => {
+        this.replacer = (note) => {
             const editorState = startFromText(note.content)
             this.oldText = editorState.getCurrentContent().getPlainText()
             this.setState({ editorState, itemId: note.itemId })
         }
-        this.props.replaceHandler(replacer)
+        this.props.replaceHandler(this.replacer)
     }
     onChange(editorState) {
         const newText = editorState.getCurrentContent().getPlainText()

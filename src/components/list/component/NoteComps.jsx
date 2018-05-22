@@ -12,10 +12,10 @@ export function NoteContent({ itemId, content, select }){
 }
 
 export function NoteWrapper({ isSelected, children }){
-    let style = { cursor:'pointer', borderRight: '0.5px solid #ccc' }
+    let style = { cursor:'pointer' }
     let _class = ""
     if(isSelected){
-        style = { borderRight: '0.5px solid #ccc', backgroundColor: '#ececec' } 
+        style = { backgroundColor: '#ececec' } 
         _class = "selectedNote"
     }
     return (
@@ -25,4 +25,3 @@ export function NoteWrapper({ isSelected, children }){
       </div>
     )
 }
-

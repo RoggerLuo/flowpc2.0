@@ -1,10 +1,5 @@
 import { startFromScratch, startFromText } from './draft'
 import invariant from 'invariant'
-// import moveSelectionToEnd from './moveSelectionToEnd'
-/*
-    1新建之后留了一个字母
-    2新建之后无法保存
-*/
 export default {
     namespace: 'editor',
     state: {
@@ -21,6 +16,12 @@ export default {
         }
     },
     effects: {
+        * delete({ itemId, callback }, { fetch, call, put }) {
+            invariant(!!itemId,'itemId没有传入')
+            const res = yield call(fetch, `note/${itemId}`, { method: 'delete' })
+            // 不知道为什么DELETE的没有返回，server端给了返回的
+            callback && callback()
+        },        
         * save({ unsaved, editorState, itemId }, { fetch, call, put }) {
             invariant(!!itemId,'itemId没有传入')
             if (unsaved) {
@@ -46,16 +47,3 @@ export default {
         }
     }
 }
-
-// * new({ state }, { fetch, call, put }) {
-//     yield put({ type: 'save', ...state })
-//     const itemId = Date.parse(new Date())
-//     yield put({ type: 'startFromEmpty', note: { itemId } })
-// },
-
-// read(state, { note }) {
-//     return { ...state, editorState: startFromText(note.content || ''), note }
-// },
-// startFromEmpty(state,{ note }) {
-//     return { ...state, editorState: startFromScratch(), note }
-// }

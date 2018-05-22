@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './style'
 import './global.css'
-import List,{ initListData, listAdd, listModify } from 'components/list'
+import List,{ initListData, listAdd, listModify, listRemove } from 'components/list'
 import Editor from 'components/editor'
 class App extends React.Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class App extends React.Component {
         this.bridge = bridge
         this.onNewNote = listAdd
         this.onSaveNote = listModify
+        this.onDelete = listRemove
     }
     componentDidMount(){
         initListData((notes)=>{
@@ -29,15 +30,20 @@ class App extends React.Component {
             <div style={{height:'100%',display:'flex',flexDirection:'column'}}>
                 <div style={{flex:'1',display:'flex'}} >
                     <div style={{height:'100%',display:'flex',width:'50%'}}>
-                        <div className={s.scrollbar} style={{width:'50%',height:'100%',overflowY:'auto'}}>
+                        <div className={s.scrollbar} style={{width:'50%',height:'100%',overflowY:'scroll'}}>
                             <List onSelect={this.onSelect}/>
                         </div>
-                        <div className={s.scrollbar} style={{width:'50%',height:'100%',overflowY:'auto'}}>
+                        <div className={s.scrollbar} style={{width:'50%',height:'100%',overflowY:'scroll'}}>
                             <List/>
                         </div>
                     </div>
                     <div style={{height:'100%',width:'50%'}}>
-                        <Editor replaceHandler={this.replaceHandler} onNewNote={this.onNewNote} onSaveNote={this.onSaveNote}/>
+                        <Editor 
+                            replaceHandler={this.replaceHandler} 
+                            onNewNote={this.onNewNote} 
+                            onSaveNote={this.onSaveNote}
+                            onDelete={this.onDelete}
+                        />
                     </div>
                 </div>
             </div>

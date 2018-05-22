@@ -1,23 +1,22 @@
-
 .scrollbar::-webkit-scrollbar {
-  width: 2px;
-  background: white;
+  width: 1px;
+  background: #cccccc;
 }
 .scrollbar::-moz-scrollbar {
-  width: 2px;
-  background: white;
+  width: 1px;
+  background: #cccccc;
 }
 .scrollbar::-ms-scrollbar {
-  width: 2px;
-  background: white;
+  width: 1px;
+  background: #cccccc;
 }
 .scrollbar::-o-scrollbar {
-  width: 2px;
-  background: white;
+  width: 1px;
+  background: #cccccc;
 }
 .scrollbar::scrollbar {
-  width: 2px;
-  background: white;
+  width: 1px;
+  background: #cccccc;
 }
 .scrollbar::-webkit-scrollbar-thumb {
   background: #00B1FB;

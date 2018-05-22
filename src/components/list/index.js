@@ -12,3 +12,6 @@ export function listAdd(note) {
 export function listModify(note) {
     dva._store.dispatch({ type: 'list/modify', note })
 }
+export function listRemove(itemId,callback) {
+    dva._store.dispatch({ type: 'list/remove', itemId, callback })
+}

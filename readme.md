@@ -1,3 +1,18 @@
-## react & redux
+# editor
 
-dva.saga 需要注入put参数
+# list
+## fetchData()
+```
+fetchData(
+	callback: () => any
+)
+```
+(callback:)
+callback
+## addNote(note)
+## modifyNote
+## removeNote
+return  
+arguments  
+notes  
+example  
