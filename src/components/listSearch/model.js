@@ -7,6 +7,9 @@ export default {
         index: 0,
     },
     reducers: {
+        std(state,{ method }){
+            return method(state)
+        },
         fetch(state,{ notes }) {
             return { ...state, notes }
         },

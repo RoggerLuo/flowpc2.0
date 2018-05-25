@@ -28,7 +28,7 @@ blur | 取消选择
 
 method  | 说明
 ------- | -------------
-loadData(notes) | 重新加载notes data，更新数据
+loadNotesData(notes) | 重新加载notes data，更新数据
 countWeight(array,note) | 对单个文章进行权重计算, 单层的array
 highlight(note) | 对单个文章进行highlight的处理
 clear() | 清空列表
@@ -36,7 +36,19 @@ pushX(this.list,note) | 对单个文章进行添加
 
 ## 逻辑流
 start 搜索开始  
-得到一个数组  
+调用loadNotesData(刷新数据)  
+调用loadWordList（刷新搜索结果）    
+循环每一篇文章，  
+
+		countWeight  
+		highlight  
+	then  
+	push
+
+---
+
+
+
 
 
 data  |  说明
