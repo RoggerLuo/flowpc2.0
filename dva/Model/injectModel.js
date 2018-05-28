@@ -3,23 +3,19 @@ import runSaga from './runSaga'
 import composeReducer from './composeReducer'
 import { combineReducers } from 'redux'
 
-export default function(sagaMiddleware,reducers,store){
+export default function(sagaMiddleware,store,sagaInjector){
+    const reducers = {}
     return (m)=>{
-        const runSingleSaga = runSaga(sagaMiddleware,m.namespace)
+        const runSingleSaga = runSaga(sagaMiddleware,m.namespace,sagaInjector)
         injectReducer(m,reducers)
-        injectSaga(m.effects)  
+        injectSaga(m.effects)
         function injectSaga(effects) {
             if(effects) {
                 Object.keys(effects).forEach(key => {
                     runSingleSaga(key, effects[key])
                 })                
             }
-            // invariant(args.length !== 0, `saga's arg is empty`)
-            // if (args.length === 1) {
-            //     invariant(typeof(args[0]) === 'object', `the only arg of saga should be an object`)
-            // }
         }
-
     }
     function injectReducer(m,reducers) {
         invariant(

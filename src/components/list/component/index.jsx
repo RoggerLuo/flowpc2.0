@@ -4,6 +4,7 @@ import Note from './NoteContainer'
 
 function Notes({ dispatch, currentIndex, onSelect, notes }){
     const params = { dispatch, currentIndex, onSelect }
+    
     return (
         <div style={{width:'100%'}}>
             { notes.map((note,index) => <Note {...params} index={index} note={note} key={index}/>) }

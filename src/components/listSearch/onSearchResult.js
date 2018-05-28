@@ -3,10 +3,12 @@ import { Model } from 'dva'
 
 function onSearchResult(res) {
     const notes = getNotes() // cloned notes
-    const wordList = weightList(res)
+    const wordList = weight_N_Flat(res)
     loadList(wordList)
+    
     blur()
     clearNotes()
+    
     notes.forEach(note=>{
         const note = { ...note }
         highlight(note) //xss dangerousHtml
@@ -35,7 +37,7 @@ function highlight(note) {
     return note
 }
 
-function weightList() {
+function weight_N_Flat() {
     const wordList = []
     res.forEach(el => {
         el.forEach((wordEntry,ind) => {

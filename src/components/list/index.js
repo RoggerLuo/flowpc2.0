@@ -1,7 +1,7 @@
-import dva from 'dva'
+import dva,{ Model } from 'dva'
 import model from './model'
 import component from './component'
-dva.model(model)
+Model.create(model)
 export default component
 export function fetchData(cb) {
     dva._store.dispatch({ type: 'list/fetchNotes', cb })

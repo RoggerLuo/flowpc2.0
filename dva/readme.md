@@ -2,7 +2,7 @@
 ```
 import { Keyboard } from 'dva'
 
-k = new Keyboard('root')
+k = new Keyboard(document.body)
 
 k.keybind(({keyMap,meta,ctrl},catcher)=>{
     catcher(keyMap['n'],{meta,ctrl},(e)=>this.newNote())

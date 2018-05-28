@@ -1,8 +1,12 @@
 import invariant from 'invariant'
+import injectModel from './injectModel'
 
-export default function(app) {
+export default function(app){
     return { 
-        getState: app._store.getState,
+        get(namespace){
+            return app._store.getState()[namespace]
+        },
+        create: injectModel(sagaMiddleware,app._store,sagaInjector),
         change,
         reduce
     }
@@ -14,5 +18,4 @@ export default function(app) {
         invariant(namespace && reducer,'Model reduce方法需要传入namespace，reducer')
         app._store.dispatch({ type: `${namespace}/std`, reducer })
     }
-
 }

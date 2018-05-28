@@ -14,7 +14,7 @@ export default function({ reducers, state, namespace }) {
 
 function injectDefaultReducer(namespace,reducersArray,reducers) {
     const nameConflict = Object.keys(reducers).some(type => ['change', 'std'].indexOf(type) != -1)
-    invariant(!nameConflict, 'reducer的名字冲突，请勿使用change和std名作为reducer的名字')
+    invariant(!nameConflict, `reducer:[${namespace}]的方法名冲突，请勿使用"change"和"std"作为方法名`)
     reducersArray.push(handleAction(namespace + '/change', (state, { key, value }) => {
         const obj = {}
         obj[key] = value

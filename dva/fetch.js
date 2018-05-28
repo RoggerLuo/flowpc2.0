@@ -2,8 +2,9 @@ import dva from './index.js'
 import invariant from 'invariant'
 
 export default function(url, { ...options }) {
-    invariant(dva.api,`server api address is not set yet`)
-    url = `${dva.api}/${url}`
+    // invariant(dva.api,`server api address is not set yet`)
+    // dva._constants.api
+    // url = `${dva.api}/${url}`
     options.credentials = 'include'
     if (!options.method) options.method = "GET"
     options.method = options.method.toUpperCase()

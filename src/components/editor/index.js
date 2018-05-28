@@ -1,7 +1,7 @@
 import React from 'react'
-import dva from 'dva'
+import { Model } from 'dva'
 import model from './model'
 import Editor from './Editor'
 
-dva.model(model)
+Model.create(model)
 export default Editor
