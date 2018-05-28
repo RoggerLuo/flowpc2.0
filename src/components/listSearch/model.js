@@ -1,25 +1,12 @@
 import invariant from 'invariant'
 
 export default {
-    namespace: 'list',
+    namespace: 'listSearch',
     state: {
         notes: [],
         index: 0,
     },
     reducers: {
-        std(state,{ method }){
-            return method(state)
-        },
-        fetch(state,{ notes }) {
-            return { ...state, notes }
-        },
-        select(state,{ index }) {
-            return { ...state, index }
-        },
-        add(state,{ note }) {
-            const notes = [note,...state.notes]
-            return { ...state, notes, index: 0 }
-        },
         modify(state,{ note }) {
             const notes = [...state.notes]
             notes.some(_note=>{

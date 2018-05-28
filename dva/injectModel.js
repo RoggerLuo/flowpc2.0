@@ -8,14 +8,16 @@ export default function(sagaMiddleware,reducers,store){
         const runSingleSaga = runSaga(sagaMiddleware,m.namespace)
         injectReducer(m,reducers)
         injectSaga(m.effects)  
-        function injectSaga(...args) {
-            invariant(args.length !== 0, `saga's arg is empty`)
-            if (args.length === 1) {
-                invariant(typeof(args[0]) === 'object', `the only arg of saga should be an object`)
-                Object.keys(args[0]).forEach(key => {
-                    runSingleSaga(key, args[0][key])
-                })
+        function injectSaga(effects) {
+            if(effects) {
+                Object.keys(effects).forEach(key => {
+                    runSingleSaga(key, effects[key])
+                })                
             }
+            // invariant(args.length !== 0, `saga's arg is empty`)
+            // if (args.length === 1) {
+            //     invariant(typeof(args[0]) === 'object', `the only arg of saga should be an object`)
+            // }
         }
 
     }

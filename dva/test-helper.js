@@ -1,5 +1,5 @@
 import test from 'tape'
-import dva from './index.js'
+import dva, * as dvaStatic from './index.js'
 const _test =  (title,body) => {
     test(title,(t)=>{
         body(subTopic)
@@ -11,3 +11,4 @@ const _test =  (title,body) => {
 }
 dva.test = _test
 global.dva = dva
+global.dvaStatic = dvaStatic

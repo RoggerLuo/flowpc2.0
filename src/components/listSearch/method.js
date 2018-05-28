@@ -4,6 +4,22 @@ import component from './component'
 dva.model(model)
 export default component
 
+function onSearchResult(wordList) {
+    const notes = getNotes() // cloned notes
+    // loadNotesData(notes)
+    loadWordListData(wordList)
+    blur()
+    clearList()
+    notes.forEach(note=>{
+        countWeight(note)
+        highlight(note) //xss dangerousHtml
+        setTimeout(function(){
+            pushX(note)            
+        })
+    })
+}
+
+
 function *(){
     // dispatch saga 可以异步
 }
@@ -31,6 +47,12 @@ function measureSimilarity(notes,wordList,ind){
             _note[6] = markRedStep2(_note[6])
         })
         global.flow.dispatch({ type:'localData/sortNotes' }) //然后这个触发1
+    }
+}
+
+highLevelSearch(){
+    function onSearchResult(wordList){
+
     }
 }
 
