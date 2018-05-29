@@ -1,12 +1,12 @@
 import invariant from 'invariant'
 import injectModel from './injectModel'
 
-export default function(app){
+export default function(app,config,sagaMiddleware){ // options
     return { 
         get(namespace){
             return app._store.getState()[namespace]
         },
-        create: injectModel(sagaMiddleware,app._store,sagaInjector),
+        create: injectModel(sagaMiddleware,app._store,config),
         change,
         reduce
     }

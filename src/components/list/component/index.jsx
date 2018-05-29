@@ -1,5 +1,5 @@
 import React from 'react'
-import dva from 'dva'
+import { connect } from 'dva'
 import Note from './NoteContainer'
 
 function Notes({ dispatch, currentIndex, onSelect, notes }){
@@ -19,4 +19,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default dva.connect(mapStateToProps)(Notes)
+export default connect(mapStateToProps)(Notes)

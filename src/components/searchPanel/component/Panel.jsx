@@ -1,5 +1,5 @@
 import React from 'react'
-import dva from 'dva'
+import { connect } from 'dva'
 import SearchBar from './searchBar'
 
 function Panel({ text, visibility, dispatch }) {
@@ -27,4 +27,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default dva.connect(mapStateToProps)(Panel)
+export default connect(mapStateToProps)(Panel)

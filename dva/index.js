@@ -2,24 +2,36 @@ import "babel-polyfill"
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { connect } from 'react-redux'
-import keyboard from './Keyboard'
+import invariant from 'invariant'
+import Keyboard from './Keyboard'
 import modelMethod from './Model'
 import constantMethod from './Constant'
+import Fetch from './Fetch'
 
 const app = {
     _store: null,
     _constants: {},
-    _model: {}    
+    // _model: {},
+    start
+} 
+let alreadyStarted = false
+const config = { sagaInjection: {}}
+function start(_conf){
+    invariant(!alreadyStarted,'dva已经初始化过一次了')
+    alreadyStarted = true
+    if(!_conf) return
+    invariant(typeof(_conf) ==='object','config文件应该为object')
+    Object.keys(_conf).forEach(key=>{
+        config[key] = _conf[key]   
+    })
 }
-
 const sagaMiddleware = createSagaMiddleware()
-app._store = createStore(a => a,applyMiddleware(sagaMiddleware))
-app._model.sagaMiddleware = sagaMiddleware
+app._store = createStore(a => a, applyMiddleware(sagaMiddleware))
 
-export const connect
-export const Model = modelMethod(app)
-export const Keyboard = keyboard
+// export 
+export const Model = modelMethod(app,config,sagaMiddleware)
 export const Constant = constantMethod(app)
+export { Fetch, connect, Keyboard } 
 export default app
 
 // const reducers = {}

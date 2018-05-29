@@ -1,5 +1,5 @@
 import React from 'react'
-import dva from 'dva'
+import { connect } from 'dva'
 import { Editor } from 'draft-js'
 import { myKeyBindingFn, handleKeyCommand } from './keyCommand'
 import moveSelectionToEnd from './moveSelectionToEnd'
@@ -78,4 +78,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default dva.connect(mapStateToProps)(MyEditor)
+export default connect(mapStateToProps)(MyEditor)
