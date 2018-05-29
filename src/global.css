@@ -4,7 +4,9 @@ html, body, :global(#root) {
   font-family:"Microsoft YaHei";
   word-break: break-all;
 }
-
+:global(.highlight-font-color) {
+    color:red;
+}
 /*:global(pre){
     background-color: white;
     border-radius: 5px;

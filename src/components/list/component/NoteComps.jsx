@@ -6,7 +6,7 @@ export function NoteContent({ itemId, content, select }){
           onClick={select}
           style={{fontSize:'16px',lineHeight:'1.5',minHeight:'50px',padding:'15px 10px 15px 10px'}} 
         >
-            <div>{content}</div>
+            <div dangerouslySetInnerHTML={{__html: content}}></div>
         </div>
     )
 }

@@ -49,7 +49,7 @@ dva.test('listSearch highlight',(t)=>{
     })
 
     t('return translated string',()=>{
-        return highlight(note,wordlist) === 'test&lt;a&gt;testatesta' 
+        return highlight(note,wordlist) === 'test&lt;<span class="highlight-font-color">a</span>&gt;testatesta' 
     })
 })
 

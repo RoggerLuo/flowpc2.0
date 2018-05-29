@@ -45,7 +45,7 @@ const unxss = function(params) {
 };
 
 
-const xss = {
+const Xss = {
     escape: function(str) {
         return xss(str)
     },
@@ -53,5 +53,4 @@ const xss = {
         return unxss(str)
     }
 }
-export default xss
-
+export default Xss
