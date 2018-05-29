@@ -11,7 +11,7 @@ function onSearchResult(res) {
     
     notes.forEach(note=>{
         const note = { ...note }
-        highlight(note) //xss dangerousHtml
+        highlight(note,wordList) //xss dangerousHtml
         setTimeout(function(){
             pushX(note)            
         })
@@ -32,7 +32,7 @@ function pushX(note) {
     }})
 }
 
-function highlight(note) {
+export function highlight(note,wordList) {
     // 暂时什么都不干 用昨天的xss
     return note
 }
