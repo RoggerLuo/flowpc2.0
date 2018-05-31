@@ -1,6 +1,6 @@
 import dva,{ Model } from 'dva'
 import model from './model'
-import component from './component'
+import Panel from './Panel'
 // import onSearchInput from './onSearchInput'
 // import getSimilarNotes from './getSimilarNotes'
 // import toggle from './toggle'
@@ -8,7 +8,7 @@ import component from './component'
 // global.flow = global.flow || {}
 // global.flow.search = { onSearchInput, getSimilarNotes, components, toggle }
 Model.create(model)
-export default component
+export default Panel
 export function toggle() {
     dva._store.dispatch({ type: 'searchPanel/toggle' })
 }

@@ -17,14 +17,10 @@ const onSearchResult = (wordList) => {
 class App extends React.Component {
     constructor(props) {
         super(props)
-        // register
         this.handlers = {}
-        // this.editorActions = {}
         this.delivery = handlers => {
             this.handlers = { ...this.handlers, ...handlers }
         }
-        //this.editorActions = actions
-        // use
         keybind(({ keyMap, meta, ctrl }, catcher) => {
             catcher(keyMap['f'], { meta }, (e) => toggle())
             catcher(keyMap['n'], { meta, ctrl }, (e) => this.handlers.newNote())
@@ -67,20 +63,3 @@ class App extends React.Component {
     }
 }
 export default App
-
-/*
-<div style={{height:'40px',width:'100%'}}>
-    <Header/>
-</div>
-*/
-/*
-// const bridge = {}
-// this.bridge = bridge
-
-// this.delivery = ({ replace, saveNote, newNote, deleteNote }) => {
-//     bridge.replace = replace
-//     bridge.saveNote = saveNote
-//     bridge.deleteNote = deleteNote
-//     bridge.newNote = newNote
-// }
-*/

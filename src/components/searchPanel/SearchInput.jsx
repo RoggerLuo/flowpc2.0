@@ -1,20 +1,16 @@
 import React from 'react'
 import { Keyboard } from 'dva'
 
-
-class Search extends React.Component { 
+class SearchInput extends React.Component { 
     constructor(props) {
         super(props)
+        this.input = {}
         this.setRef = ref => this.input = ref
     }
     componentDidMount() {
         const keyboard = new Keyboard(this.input)
         const keybind = keyboard.keybind
-        keybind(({ keyMap, meta, ctrl }, catcher) => {
-            catcher(keyMap['enter'], {}, (e) => {
-                this.props.toggle()    
-            })
-        })
+        this.props.delivery({ keybind })
     }
     render(){
         return (
@@ -29,4 +25,4 @@ class Search extends React.Component {
         )
     }
 }
-export default Search
+export default SearchInput

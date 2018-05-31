@@ -14,13 +14,12 @@ export default {
         }
     },
     effects: {
-        * search({ wordstr, callback }, { fetch, call, put }) {
-            if(wordstr === '') {
+        * search({ queryStr, onSearchResult }, { fetch, call, put }) {
+            if(queryStr === '') {
                 return
             }
-            const res = yield call(fetch, `search`, { method: 'post', params: wordstr }) //没写完
-            // res = addWeights(res)
-            callback && callback(res)
+            const res = yield call(fetch, `search/${queryStr}`) //没写完
+            onSearchResult && onSearchResult(res)
         },        
         * save({ unsaved, editorState, itemId }, { fetch, call, put }) {
             invariant(!!itemId,'itemId没有传入')
