@@ -15,3 +15,6 @@ export function modifyNote(note) {
 export function removeNote(itemId,callback) {
     dva._store.dispatch({ type: 'list/remove', itemId, callback })
 }
+export function getNotes(itemId,callback) {
+    return [...Model.get('list').notes]
+}

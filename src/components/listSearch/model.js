@@ -1,5 +1,4 @@
 import invariant from 'invariant'
-
 export default {
     namespace: 'listSearch',
     state: {

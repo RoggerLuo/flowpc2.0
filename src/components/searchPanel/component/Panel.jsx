@@ -1,10 +1,19 @@
 import React from 'react'
 import { connect } from 'dva'
 import SearchBar from './searchBar'
+import dva, { Keyboard } from 'dva'
 
-function Panel({ text, visibility, dispatch }) {
+const keyboard = new Keyboard(document.getElementById('#search-input'))
+const keybind = keyboard.keybind
+
+function Panel({ text, visibility, dispatch, onSearchResult }) {
     if(!visibility) return null
-    
+    function search(){
+        const callback = (wordList) => {
+            onSearchResult(notes,wordList)            
+        }
+        dispatch({ type: 'searchPanel/search', callback })
+    }
     const onChange = (e) => {
         dispatch({ type:'searchPanel/onChange', text: e.target.value })
     }
@@ -19,7 +28,6 @@ function Panel({ text, visibility, dispatch }) {
         </div>
     )
 }
-
 function mapStateToProps(state) {
     return { 
         visibility: state.searchPanel.visibility,

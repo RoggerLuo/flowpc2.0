@@ -11,6 +11,7 @@ const xssReplace = function(str) {
 
 const xss = function(params) {
     if (params && typeof params === 'object') {
+        params = { ...params }
         for (var i in params) {
             params[i] = (typeof params[i] === 'string') ? xssReplace(params[i]) : xss(params[i]);
         }
@@ -35,6 +36,7 @@ const antiXssReplace = function(str) {
 
 const unxss = function(params) {
     if (params && typeof params === 'object') {
+        params = { ...params }
         for (var i in params) {
             params[i] = (typeof params[i] === 'string') ? antiXssReplace(params[i]) : unxss(params[i]);
         }

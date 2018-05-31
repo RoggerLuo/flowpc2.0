@@ -1,21 +1,26 @@
 import invariant from 'invariant'
-import { Model } from 'dva'
+import { Model, Xss } from 'dva'
+import highlight from './highlight'
+import countWeight from './countWeight'
 
-function onSearchResult(res) {
-    const notes = getNotes() // cloned notes
-    const wordList = weight_N_Flat(res)
-    loadList(wordList)
-    
+function rerender(notes,res) {
+    loadList(res)
     blur()
     clearNotes()
-    
-    notes.forEach(note=>{
-        const note = { ...note }
-        highlight(note,wordList) //xss dangerousHtml
+
+    const wordList = setWeightOfWords(res)
+    core(notes,wordList)
+}
+function core(notes,wordList){
+    note = notes.shift()
+    if(note) {
+        note = countWeight(note,wordList)
+        note = highlight(note,wordList)
+        pushX(note)
         setTimeout(function(){
-            pushX(note)            
-        })
-    })
+            core(notes,wordList)
+        })        
+    }
 }
 
 function pushX(note) {
@@ -29,15 +34,10 @@ function pushX(note) {
             }
         })
         return { ...state, notes }
-    }})
+    })
 }
 
-export function highlight(note,wordList) {
-    // 暂时什么都不干 用昨天的xss
-    return note
-}
-
-function weight_N_Flat() {
+function setWeightOfWords() {
     const wordList = []
     res.forEach(el => {
         el.forEach((wordEntry,ind) => {
@@ -51,19 +51,20 @@ function weight_N_Flat() {
 function loadList(wordList) {
     Model.reduce('listSearch',(state)=>{
         return { ...state, wordList }
-    }})
+    })
 }
+
 function blur(notes) {
     Model.reduce('listSearch',(state)=>{
         return { ...state, index: null }
-    }})
+    })
 }
 function clearNotes(notes) {
     Model.reduce('listSearch',(state)=>{
         return { ...state, notes: [] }
-    }})
+    })
 }
-
+/*
 function measureSimilarity(notes,wordList,ind){
     const note = notes[ind] 
     const note_word_list = JSON.parse(note[3])
@@ -96,5 +97,6 @@ export function select(note,index,onSelect) {
 
         onSelect(note)
         return { ...state, index }
-    }})
+    })
 }
+*/
