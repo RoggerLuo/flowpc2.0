@@ -7,8 +7,8 @@
     "start": "webpack-dev-server --progress --color",
     "build": "node ./webpack.config/build.js",
     "build-test": "node ./webpack.config/build-test.js",
-    "test": "export NODE_ENV=test;node dva/testfile-iter.js | grep spec.js$ | xargs -n1 -I {} tape -r babel-register -r ./dva/test-helper.js {}",
-    "dva-test": "export NODE_ENV=test;tape -r babel-register -r ./dva/test-helper.js */dva_test/*.spec.js"
+    "test": "export NODE_ENV=test;node dva/testfile-iter.js | grep spec.js$ | xargs -n1 -I {} tape -r babel-register -r ./dva/test-helper.js {} | tap-difflet",
+    "dva-test": "export NODE_ENV=test;tape -r babel-register -r ./dva/test-helper.js */dva_test/*.spec.js | tap-difflet"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "html-webpack-plugin": "^3.2.0",
     "postcss-loader": "^2.1.4",
     "style-loader": "^0.21.0",
+    "tap-difflet": "^0.7.1",
     "tape": "^4.9.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.6.0",
