@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'dva'
+import dva,{connect} from 'dva'
 import Note from './NoteContainer'
 
 function Notes({ dispatch, currentIndex, onSelect, notes }){

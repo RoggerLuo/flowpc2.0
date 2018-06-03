@@ -4,7 +4,7 @@ import { myKeyBindingFn, handleKeyCommand } from './keyCommand'
 import moveSelectionToEnd from './moveSelectionToEnd'
 import { saveNote, newNote, deleteNote } from './keyActions'
 import { startFromScratch, startFromText } from './draft'
-import { connect, Keyboard } from 'dva'
+import dva,{connect} from 'dva'
 import img from './bg.png'
 
 class MyEditor extends React.Component {
@@ -28,19 +28,12 @@ class MyEditor extends React.Component {
         this.buildExternalInterface()
     }
     buildExternalInterface(){
-        this.replace = (note) => {
+        this.replacer = (note) => {
             const editorState = startFromText(note.content)
             this.oldText = editorState.getCurrentContent().getPlainText()
             this.setState({ editorState, itemId: note.itemId })
         }
-        // this.props.deliver(this.replace)
-        this.props.deliver({ 
-            replace: this.replace, 
-            saveNote: this.saveNote,
-            deleteNote: this.deleteNote,
-            newNote: this.newNote
-        })
-
+        this.props.replaceHandler(this.replacer)
     }
     onChange(editorState) {
         const newText = editorState.getCurrentContent().getPlainText()
