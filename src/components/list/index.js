@@ -1,20 +1,17 @@
-import dva,{ Model } from 'dva'
+import dva from 'dva'
 import model from './model'
 import component from './component'
-Model.create(model)
+dva.model(model)
 export default component
-export function fetchData(cb) {
+export function initListData(cb) {
     dva._store.dispatch({ type: 'list/fetchNotes', cb })
 }
-export function addNote(note) {
+export function listAdd(note) {
     dva._store.dispatch({ type: 'list/add', note })
 }
-export function modifyNote(note) {
+export function listModify(note) {
     dva._store.dispatch({ type: 'list/modify', note })
 }
-export function removeNote(itemId,callback) {
+export function listRemove(itemId,callback) {
     dva._store.dispatch({ type: 'list/remove', itemId, callback })
-}
-export function getNotes(itemId,callback) {
-    return [...Model.get('list').notes]
 }

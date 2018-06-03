@@ -1,17 +1,16 @@
 import _test from 'tape'
-
-dva.test('Keyboard class', (t) => {
-    const fakeDOM = { onkeydown(){} }
-    const Keyboard = dvaStatic.Keyboard
-    let kb
-    t('new it with a DOM', () => {
-        kb = new Keyboard(fakeDOM)
-        return !!kb
+import keyboard, { onkeydown } from '../keyboard'
+dva.test('keyboard module api', (t) => {
+    t('feed it with a function', () => {
+        keyboard(function() {
+            console.log('feed it with a function')
+        })
+        return true
     })
-    const keybind = kb.keybind
     t('it provides first arg with 4 var to this function', () => {
-        keybind(function({ keyMap, meta, ctrl, shift }) {
-            console.log('keyMap',!!keyMap)
+        keyboard(function({ keyMap, meta, ctrl, shift }) {
+            console.log('keyMap')
+            console.log(keyMap)
             console.log('meta', meta)
             console.log('ctrl', ctrl)
             console.log('shift', shift)
@@ -19,16 +18,16 @@ dva.test('Keyboard class', (t) => {
         return true
     })
     t('function should call the second arg', () => {
-        keybind(
+        keyboard(
             function({ keyMap, meta, ctrl, shift }, catcher) {
-                catcher(83, { ctrl: true }, () => { console.log('fake catcher callback number') })
+                catcher(83, { ctrl: true }, () => { console.log('fake catcher callback') })
                 catcher('83', { ctrl: true }, () => { console.log('fake catcher callback string') })
             }
         )
         return true
     })
     t('result display', () => {
-        fakeDOM.onkeydown({ ctrlKey: true, metaKey: false, keyCode: 83, shiftKey: false, preventDefault(){}, stopPropagation(){} })
+        onkeydown({ ctrlKey: true, metaKey: false, keyCode: 83, shiftKey: false, preventDefault(){}, stopPropagation(){} })
         return true
     })
 })

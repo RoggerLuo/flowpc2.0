@@ -1,35 +1,35 @@
+import dva from './index.js'
 import invariant from 'invariant'
 
-export default function(baseUrl) {
-    return (url, { ...options }) => {
-        invariant(!!baseUrl,`Fetch需要传入一个baseUrl配置项`)
-        url = `${baseUrl}/${url}`
-        options.credentials = 'include'
-        if (!options.method) options.method = "GET"
-        options.method = options.method.toUpperCase()
-        if (options.method === 'POST' || options.method === 'PUT') {
-            options.body = transformBody(options.body)
-        }
-        if (options.query) {
-            url = url + transformQuery(options.query)
-        }
-        return fetch(url, options)
-            .then(checkStatus)
-            .then(parseJSON)
-            .catch(err => {
-                console.log(err)
-            })
+export default function(url, { ...options }) {
+    invariant(dva.api,`server api address is not set yet`)
+    url = `${dva.api}/${url}`
+    options.credentials = 'include'
+    if (!options.method) options.method = "GET"
+    options.method = options.method.toUpperCase()
+    if (options.method === 'POST' || options.method === 'PUT') {
+        options.body = transformBody(options.body)
     }
+    if (options.query) {
+        url = url + transformQuery(options.query)
+    }
+    return fetch(url, options)
+        .then(checkStatus)
+        .then(parseJSON)
+        .catch(err => {
+            console.log(err)
+            alert(err)
+        })
 }
 
 function parseJSON(response) {
-    return response.json();
+  return response.json();
 }
 
 function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-        return response;
-    }
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  }
 }
 
 function transformQuery(query) {

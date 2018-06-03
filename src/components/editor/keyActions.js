@@ -9,19 +9,19 @@ export function deleteNote(){
     }
     if(!confirm(`确定要删除当前文章吗?\n"${content}"`)) return 
     const { itemId } = this.state
-    const callback = () => this.props.onDelete(itemId,(newNote)=>this.replace(newNote))
+    const callback = () => this.props.onDelete(itemId,(newNote)=>this.replacer(newNote))
     this.props.dispatch({ type: 'editor/delete', itemId, callback })
 }
 
 export function saveNote(){
     const { itemId, editorState } = this.state
-    const { onNew, onSave, dispatch, unsaved } = this.props
+    const { onNewNote, onSaveNote, dispatch, unsaved } = this.props
     const note = { itemId, content: editorState.getCurrentContent().getPlainText() }
     if (newNoteAdded) {
         newNoteAdded = false
-        onNew && onNew(note)
+        onNewNote && onNewNote(note)
     } else {
-        onSave && onSave(note)
+        onSaveNote && onSaveNote(note)
     }
     dispatch({ type: 'editor/save', unsaved, ...this.state })
 }

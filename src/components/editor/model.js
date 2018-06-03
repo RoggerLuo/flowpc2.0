@@ -6,11 +6,11 @@ export default {
         unsaved: false
     },
     reducers: {
-        // change(state, { key, value }) {
-        //     let obj = {}
-        //     obj[key] = value
-        //     return { ...state, ...obj }
-        // },
+        change(state, { key, value }) {
+            let obj = {}
+            obj[key] = value
+            return { ...state, ...obj }
+        },
         onChange(state,action) {
             return { ...state, unsaved: true }
         }

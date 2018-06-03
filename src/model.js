@@ -7,7 +7,13 @@ export default {
         showSearchPanel: false,
         content: '',
     },
-    reducers: {},
+    reducers: {
+        change(state, { key, value }) {
+            let obj = {}
+            obj[key] = value
+            return Object.assign({}, state, obj)
+        },
+    },
     effects: {},
     event: {
         onReady(dispatch) {

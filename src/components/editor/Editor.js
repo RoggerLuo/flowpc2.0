@@ -1,10 +1,10 @@
 import React from 'react'
-import { connect } from 'dva'
 import { Editor } from 'draft-js'
 import { myKeyBindingFn, handleKeyCommand } from './keyCommand'
 import moveSelectionToEnd from './moveSelectionToEnd'
 import { saveNote, newNote, deleteNote } from './keyActions'
 import { startFromScratch, startFromText } from './draft'
+import dva from 'dva'
 import img from './bg.png'
 
 class MyEditor extends React.Component {
@@ -18,28 +18,28 @@ class MyEditor extends React.Component {
         this.newNote = newNote.bind(this)
         this.buildExternalInterface.bind(this)
         // 
+        dva.keyBind(({keyMap,meta,ctrl},catcher)=>{
+            catcher(keyMap['n'],{meta,ctrl},(e)=>this.newNote())
+            catcher(keyMap['s'],{meta},(e)=>this.saveNote())
+            catcher(keyMap['backSpace'],{meta,ctrl},(e)=>this.deleteNote())
+        })
         this.setDomEditorRef = ref => this.domEditor = ref
         this.oldText = '' //为了能够区分是 光标change 还是 内容change
         this.buildExternalInterface()
     }
     buildExternalInterface(){
-        this.replace = (note) => {
+        this.replacer = (note) => {
             const editorState = startFromText(note.content)
             this.oldText = editorState.getCurrentContent().getPlainText()
             this.setState({ editorState, itemId: note.itemId })
         }
-        this.props.delivery({ 
-            replace: this.replace, 
-            saveNote: this.saveNote,
-            deleteNote: this.deleteNote,
-            newNote: this.newNote
-        })
+        this.props.replaceHandler(this.replacer)
     }
     onChange(editorState) {
         const newText = editorState.getCurrentContent().getPlainText()
         this.setState({ editorState },()=>{
             if(newText !== this.oldText){
-                // this.props.changeListener && this.props.changeListener(newText)
+                this.props.changeListener && this.props.changeListener(newText)
                 this.props.dispatch({ type: 'editor/onChange' })
                 this.oldText = newText
             }
@@ -53,7 +53,7 @@ class MyEditor extends React.Component {
         }
     }
     render(){
-        let style = { fontSize:'17px', cursor:'text', height:'100%',lineHeight: '1.75', overflow: 'auto' }
+        let style = { fontSize:'17px', cursor:'text', height:'100%' }
         if(this.props.unsaved){
             style = { ...style, backgroundImage: `url(${img})` }            
         }
@@ -78,4 +78,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(MyEditor)
+export default dva.connect(mapStateToProps)(MyEditor)
