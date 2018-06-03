@@ -8,6 +8,7 @@ import modelMethod from './Model'
 import constantMethod from './Constant'
 import Fetch from './Fetch'
 import Xss from './Xss'
+import Deliver from './Deliver'
 
 const app = {
     _store: null,
@@ -32,7 +33,7 @@ app._store = createStore(a => a, applyMiddleware(sagaMiddleware))
 // export 
 export const Model = modelMethod(app,config,sagaMiddleware)
 export const Constant = constantMethod(app)
-export { Fetch, connect, Keyboard, Xss } 
+export { Fetch, connect, Keyboard, Xss, Deliver } 
 export default app
 
 // const reducers = {}

@@ -13,8 +13,8 @@ function Notes({ dispatch, currentIndex, onSelect, notes }){
 
 function mapStateToProps(state) {
     return { 
-        notes: state.list.notes,
-        currentIndex: state.list.index
+        notes: state.listSearch.notes,
+        currentIndex: state.listSearch.index
     }
 }
 

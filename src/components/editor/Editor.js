@@ -4,7 +4,7 @@ import { myKeyBindingFn, handleKeyCommand } from './keyCommand'
 import moveSelectionToEnd from './moveSelectionToEnd'
 import { saveNote, newNote, deleteNote } from './keyActions'
 import { startFromScratch, startFromText } from './draft'
-import dva from 'dva'
+import { connect, Keyboard } from 'dva'
 import img from './bg.png'
 
 class MyEditor extends React.Component {
@@ -18,22 +18,29 @@ class MyEditor extends React.Component {
         this.newNote = newNote.bind(this)
         this.buildExternalInterface.bind(this)
         // 
-        dva.keyBind(({keyMap,meta,ctrl},catcher)=>{
-            catcher(keyMap['n'],{meta,ctrl},(e)=>this.newNote())
-            catcher(keyMap['s'],{meta},(e)=>this.saveNote())
-            catcher(keyMap['backSpace'],{meta,ctrl},(e)=>this.deleteNote())
-        })
+        // dva.keyBind(({keyMap,meta,ctrl},catcher)=>{
+        //     catcher(keyMap['n'],{meta,ctrl},(e)=>this.newNote())
+        //     catcher(keyMap['s'],{meta},(e)=>this.saveNote())
+        //     catcher(keyMap['backSpace'],{meta,ctrl},(e)=>this.deleteNote())
+        // })
         this.setDomEditorRef = ref => this.domEditor = ref
         this.oldText = '' //为了能够区分是 光标change 还是 内容change
         this.buildExternalInterface()
     }
     buildExternalInterface(){
-        this.replacer = (note) => {
+        this.replace = (note) => {
             const editorState = startFromText(note.content)
             this.oldText = editorState.getCurrentContent().getPlainText()
             this.setState({ editorState, itemId: note.itemId })
         }
-        this.props.replaceHandler(this.replacer)
+        // this.props.deliver(this.replace)
+        this.props.deliver({ 
+            replace: this.replace, 
+            saveNote: this.saveNote,
+            deleteNote: this.deleteNote,
+            newNote: this.newNote
+        })
+
     }
     onChange(editorState) {
         const newText = editorState.getCurrentContent().getPlainText()
@@ -78,4 +85,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default dva.connect(mapStateToProps)(MyEditor)
+export default connect(mapStateToProps)(MyEditor)

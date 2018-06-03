@@ -1,21 +1,25 @@
-import { startFromScratch, startFromText } from './draft'
 import invariant from 'invariant'
 export default {
-    namespace: 'editor',
+    namespace: 'searchPanel',
     state: {
-        unsaved: false
+        visibility: false,
+        text: ''
     },
     reducers: {
-        onChange(state,action) {
-            return { ...state, unsaved: true }
+        onChange(state,{ text }) {
+            return { ...state, text }
+        },
+        toggle(state) {
+            return { ...state, visibility: !state.visibility }
         }
     },
     effects: {
-        * delete({ itemId, callback }, { fetch, call, put }) {
-            invariant(!!itemId,'itemId没有传入')
-            const res = yield call(fetch, `note/${itemId}`, { method: 'delete' })
-            // 不知道为什么DELETE的没有返回，server端给了返回的
-            callback && callback()
+        * search({ queryStr, onSearchResult }, { fetch, call, put }) {
+            if(queryStr === '') {
+                return
+            }
+            const res = yield call(fetch, `search/${queryStr}`) //没写完
+            onSearchResult && onSearchResult(res)
         },        
         * save({ unsaved, editorState, itemId }, { fetch, call, put }) {
             invariant(!!itemId,'itemId没有传入')

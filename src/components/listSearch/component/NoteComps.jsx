@@ -1,12 +1,12 @@
 import React from 'react'
 
-export function NoteContent({ itemId, content, select }){
+export function NoteContent({ itemId, displayContent, select }){
     return (
         <div 
           onClick={select}
           style={{fontSize:'16px',lineHeight:'1.5',minHeight:'50px',padding:'15px 10px 15px 10px'}} 
         >
-            <div dangerouslySetInnerHTML={{__html: content}}></div>
+          <div dangerouslySetInnerHTML={{__html: displayContent}}></div>
         </div>
     )
 }
@@ -20,7 +20,7 @@ export function NoteWrapper({ isSelected, children }){
     }
     return (
       <div style={style} className={_class}>
-          {children}
+          { children }
           <div style={{widht:'100%',height:'1px',borderTop:'0.5px solid #ccc'}}></div>
       </div>
     )
