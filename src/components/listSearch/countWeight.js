@@ -3,11 +3,12 @@ import invariant from 'invariant'
 export default function(note,wordList) {
     note = { ...note }
     note.weight = 0
+    note._content = note.content
     wordList.forEach(word=>count(note,word))
     function count(note,word) {
-        if(note.content.indexOf(word.word) != -1) {
+        if(note._content.indexOf(word.word) != -1) {
             note.weight += parseInt(word.weight)
-            note.content = note.content.replace(word.word,'')
+            note._content = note._content.replace(word.word,'')
             count(note,word)
         }
     }

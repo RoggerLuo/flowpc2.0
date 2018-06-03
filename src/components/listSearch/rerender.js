@@ -3,7 +3,7 @@ import { Model, Xss } from 'dva'
 import highlight from './highlight'
 import countWeight from './countWeight'
 
-function rerender(notes,res) {
+export default function (notes,res) { //rerender
     loadList(res)
     blur()
     clearNotes()
@@ -11,8 +11,9 @@ function rerender(notes,res) {
     const wordList = setWeightOfWords(res)
     core(notes,wordList)
 }
+
 function core(notes,wordList){
-    note = notes.shift()
+    let note = notes.shift()
     if(note) {
         note = countWeight(note,wordList)
         note = highlight(note,wordList)
@@ -24,7 +25,10 @@ function core(notes,wordList){
 }
 
 function pushX(note) {
-    invariant(note.content && note.itemId && note.weight,'pushX: note缺少属性')
+    invariant(note.content && note.itemId,'pushX: note缺少属性')
+    if(note.weight != 0) {
+        invariant(!!note.weight,'pushX: note缺少weight属性')
+    }
     Model.reduce('listSearch',(state)=>{
         const notes = [...state.notes]
         state.notes.some((noteInList,ind)=>{
@@ -33,11 +37,16 @@ function pushX(note) {
                 return true
             }
         })
+        if(state.notes.length == 0) {
+            if(note.weight > 0) {
+                notes.push(note)
+            }
+        }
         return { ...state, notes }
     })
 }
 
-function setWeightOfWords() {
+function setWeightOfWords(res) {
     const wordList = []
     res.forEach(el => {
         el.forEach((wordEntry,ind) => {
@@ -46,6 +55,7 @@ function setWeightOfWords() {
             }
         })
     })
+    return wordList
 }
 
 function loadList(wordList) {
@@ -59,44 +69,8 @@ function blur(notes) {
         return { ...state, index: null }
     })
 }
-function clearNotes(notes) {
+function clearNotes() {
     Model.reduce('listSearch',(state)=>{
         return { ...state, notes: [] }
     })
 }
-/*
-function measureSimilarity(notes,wordList,ind){
-    const note = notes[ind] 
-    const note_word_list = JSON.parse(note[3])
-    if(!note[6]) note[6] = note[2]
-    wordList.forEach(entry => {
-        if(note_word_list.indexOf(entry.word) !== -1){
-            note[5] += entry.weight
-            note[6] = markRedStep1(note[6],entry.word)
-        }
-    })
-    if(note[5] && (note[5] > 0)){
-        global.flow.dispatch({ type:'localData/sortNotes' }) //然后这个触发1        
-    }
-
-    if( (ind+1) < notes.length){
-        setTimeout(function(){
-            measureSimilarity(notes,wordList,ind+1)
-        })
-    }else{
-        // 进入这里意味着 结束了
-        notes.forEach(_note=>{
-            _note[6] = markRedStep2(_note[6])
-        })
-        global.flow.dispatch({ type:'localData/sortNotes' }) //然后这个触发1
-    }
-}
-
-export function select(note,index,onSelect) {
-    Model.reduce('listSearch',(state)=>{
-
-        onSelect(note)
-        return { ...state, index }
-    })
-}
-*/

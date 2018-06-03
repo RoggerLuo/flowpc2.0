@@ -11,7 +11,8 @@ export default function(app,config,sagaMiddleware){ // options
         reduce
     }
     function change(namespace,key,value){
-        invariant(namespace && key && value,'Model change方法需要传入namespace，key,value')
+        invariant(namespace && key,'Model change方法需要传入namespace，key')
+        invariant(value !== undefined,'Model change方法需要传入value')
         app._store.dispatch({ type: `${namespace}/change`, key, value })
     }
     function reduce(namespace,reducer){

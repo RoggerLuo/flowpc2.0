@@ -7,7 +7,7 @@ function Note({ dispatch, onSelect, index, currentIndex, note }){
     const select = () => {
         if(isSelected) return
         invariant(typeof(onSelect)==='function','onSelect should be a function')
-        dispatch({ type: 'list/select', index })
+        dispatch({ type: 'listSearch/select', index })
         onSelect(note)
     }
     return (

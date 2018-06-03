@@ -16,11 +16,12 @@ class SearchInput extends React.Component {
         return (
             <input 
                 placeholder="Search..." 
-                style={{fontSize:'16px'}}
+                style={{fontSize:'16px', height: '20px', outline: 'none', padding: '5px',width:'100%'}}
                 onChange={this.props.onChange}
                 value={this.props.text}
                 autosize="true"
                 ref={this.setRef} 
+                autoFocus={true}
             />
         )
     }

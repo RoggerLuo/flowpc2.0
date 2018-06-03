@@ -6,6 +6,10 @@ export default {
         index: 0,
     },
     reducers: {
+        select(state,{ index }) {
+            return { ...state, index }
+        },
+
         modify(state,{ note }) {
             const notes = [...state.notes]
             notes.some(_note=>{
@@ -14,28 +18,6 @@ export default {
                     return true
                 }
             })
-            return { ...state, notes }
-        },
-        remove(state,{ itemId, callback }) {
-            let index = 0
-            state.notes.some((_note,_ind)=>{
-                if(_note.itemId == itemId) {
-                    index = _ind
-                    return true
-                }
-            })
-            const notes = [...state.notes]
-            notes.splice(index,1)
-            if(notes[state.index]) {
-                callback && callback(notes[state.index])
-            } else {
-                if(notes[state.index - 1]) {
-                    callback && callback(notes[state.index - 1])
-                }
-            }
-            if(!notes[state.index]) {
-                return { ...state, notes, index: state.index - 1 }
-            }
             return { ...state, notes }
         }
     },

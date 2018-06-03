@@ -1,11 +1,11 @@
 html, body, :global(#root) {
   height: 100%;
   margin: 0px;
-  font-family:"Microsoft YaHei";
+  /*font-family:"Microsoft YaHei";*/
   word-break: break-all;
 }
 :global(.highlight-font-color) {
-    color:red;
+    color: #00B1FB;
 }
 /*:global(pre){
     background-color: white;

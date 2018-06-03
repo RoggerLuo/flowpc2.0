@@ -1,6 +1,6 @@
 import dva,{ Model } from 'dva'
 import model from './model'
-import Panel from './Panel'
+import Panel from './PanelContainer'
 // import onSearchInput from './onSearchInput'
 // import getSimilarNotes from './getSimilarNotes'
 // import toggle from './toggle'

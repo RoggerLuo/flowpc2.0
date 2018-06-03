@@ -39,7 +39,7 @@ class MyEditor extends React.Component {
         const newText = editorState.getCurrentContent().getPlainText()
         this.setState({ editorState },()=>{
             if(newText !== this.oldText){
-                this.props.changeListener && this.props.changeListener(newText)
+                // this.props.changeListener && this.props.changeListener(newText)
                 this.props.dispatch({ type: 'editor/onChange' })
                 this.oldText = newText
             }
@@ -53,7 +53,7 @@ class MyEditor extends React.Component {
         }
     }
     render(){
-        let style = { fontSize:'17px', cursor:'text', height:'100%' }
+        let style = { fontSize:'17px', cursor:'text', height:'100%',lineHeight: '1.75', overflow: 'auto' }
         if(this.props.unsaved){
             style = { ...style, backgroundImage: `url(${img})` }            
         }
