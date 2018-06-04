@@ -28,12 +28,12 @@ class MyEditor extends React.Component {
         this.buildExternalInterface()
     }
     buildExternalInterface(){
-        this.replacer = (note) => {
+        this.replace = (note) => {
             const editorState = startFromText(note.content)
             this.oldText = editorState.getCurrentContent().getPlainText()
             this.setState({ editorState, itemId: note.itemId })
         }
-        this.props.replaceHandler(this.replacer)
+        this.props.deliver({replace: this.replace})
     }
     onChange(editorState) {
         const newText = editorState.getCurrentContent().getPlainText()
