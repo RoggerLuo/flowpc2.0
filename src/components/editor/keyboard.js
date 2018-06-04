@@ -1,10 +1,11 @@
 import React from 'react'
+import { Editor } from 'draft-js'
 import { myKeyBindingFn, handleKeyCommand } from './keyCommand'
 import moveSelectionToEnd from './moveSelectionToEnd'
 import { saveNote, newNote, deleteNote } from './keyActions'
 import { startFromScratch, startFromText } from './draft'
-
-import Editor from './EditorContainer'
+import dva,{connect} from 'dva'
+import img from './bg.png'
 
 class MyEditor extends React.Component {
     constructor(props) {
@@ -27,18 +28,12 @@ class MyEditor extends React.Component {
         this.buildExternalInterface()
     }
     buildExternalInterface(){
-        const replace = (note) => {
+        this.replace = (note) => {
             const editorState = startFromText(note.content)
             this.oldText = editorState.getCurrentContent().getPlainText()
             this.setState({ editorState, itemId: note.itemId })
         }
-        const getNote = () => {
-            return {
-                content: this.state.editorState.getCurrentContent().getPlainText(),
-                itemId: this.state.itemId
-            }
-        }
-        this.props.deliver({ replace, getNote })
+        this.props.deliver({replace: this.replace})
     }
     onChange(editorState) {
         const newText = editorState.getCurrentContent().getPlainText()
@@ -58,11 +53,29 @@ class MyEditor extends React.Component {
         }
     }
     render(){
-        //editorParams, focus,
+        let style = { fontSize:'17px', cursor:'text', height:'100%' }
+        if(this.props.unsaved){
+            style = { ...style, backgroundImage: `url(${img})` }            
+        }
         return (
-            <Editor />
+            <div style={ style } onClick={this.focus.bind(this)}>
+                <div style={{ padding: '10px' }}>
+                    <Editor 
+                        editorState={this.state.editorState} 
+                        onChange={this.onChange.bind(this)} 
+                        handleKeyCommand={this.handleKeyCommand}
+                        keyBindingFn={myKeyBindingFn}
+                        ref={this.setDomEditorRef} 
+                    />
+                </div>
+            </div>
         )
     }
 }
+function mapStateToProps(state) {
+    return { 
+        unsaved: state.editor.unsaved
+    }
+}
 
-export default MyEditor
+export default connect(mapStateToProps)(MyEditor)

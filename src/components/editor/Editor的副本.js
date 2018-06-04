@@ -58,11 +58,24 @@ class MyEditor extends React.Component {
         }
     }
     render(){
-        //editorParams, focus,
+        let style = { fontSize:'17px', cursor:'text', height:'100%' }
+        if(this.props.unsaved){
+            style = { ...style, backgroundImage: `url(${img})` }            
+        }
         return (
-            <Editor />
+            <div style={ style } onClick={this.focus.bind(this)}>
+                <div style={{ padding: '10px' }}>
+                    <Editor 
+                        editorState={this.state.editorState} 
+                        onChange={this.onChange.bind(this)} 
+                        handleKeyCommand={this.handleKeyCommand}
+                        keyBindingFn={myKeyBindingFn}
+                        ref={this.setDomEditorRef} 
+                    />
+                </div>
+            </div>
         )
     }
 }
 
-export default MyEditor
+export default connect(mapStateToProps)(MyEditor)
