@@ -1,4 +1,4 @@
-import { Editor, EditorState, ContentState } from 'draft-js'
+import { EditorState, ContentState } from 'draft-js'
 import decorator from './decorator'
 
 export function startFromText(text){

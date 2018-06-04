@@ -9,7 +9,7 @@ export function deleteNote(){
     }
     if(!confirm(`确定要删除当前文章吗?\n"${content}"`)) return 
     const { itemId } = this.state
-    const callback = () => this.props.onDelete(itemId,(newNote)=>this.replacer(newNote))
+    const callback = () => this.props.onDelete(itemId,this.replacers)
     this.props.dispatch({ type: 'editor/delete', itemId, callback })
 }
 

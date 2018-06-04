@@ -3,10 +3,10 @@ const { hasCommandModifier, isCtrlKeyCommand } = KeyBindingUtil
 
 export default function(e) {
     if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
-        return 'editor-save'
+        return 'save'
     }
     if (e.keyCode === 78 /* `S` key */ && isCtrlKeyCommand(e) && hasCommandModifier(e)) {
-        return 'editor-new'
+        return 'new'
     }
     return getDefaultKeyBinding(e)
 }

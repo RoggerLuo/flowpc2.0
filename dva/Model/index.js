@@ -8,7 +8,8 @@ export default function(app,config,sagaMiddleware){ // options
         },
         create: injectModel(sagaMiddleware,app._store,config),
         change,
-        reduce
+        reduce,
+        dispatch: app._store.dispatch
     }
     function change(namespace,key,value){
         invariant(namespace && key,'Model change方法需要传入namespace，key')
